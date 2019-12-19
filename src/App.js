@@ -4,19 +4,52 @@ import { Card } from "./components/Card"
 import Button from './components/Button'
 import './App.css'
 // import Grid from './layout/Grid'
+import { Shower } from './components/Shower'
+import { NextTemp } from './components/nextTemp'
+
+import { formatDistance, subDays } from 'date-fns'
+import format from 'date-fns/format'
+import { id } from 'date-fns/locale'
 
 const App = () => {
   let [data, setData] = useState({})
   let [algo, setAlgo] = useState(0)
 
+  let [time, setTime] = useState([])
+
+  let [selected, setSelected] = useState('')
+
+  let key = 0
   async function getLocation() {
     await navigator.geolocation.getCurrentPosition(async ({ coords }) => {
       await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${coords.latitude}&lon=${coords.longitude}&APPID=${process.env.REACT_APP_API_KEY}`)
         .then(res => res.json())
-        .then(resJson => {setData(resJson)
-        console.log(resJson);
-        })
+        .then(resJson => {
+          setData(resJson)
+          console.log(resJson);
 
+          let arr = []
+          let prev = 0
+          resJson.list.forEach((wData) => {
+            let [date, hour] = wData.dt_txt.split(' ')
+            let temp = wData.main.temp
+
+            // let obj = {date, temp}
+            let obj = { date, hour, wData }
+
+            if (arr.length > 0) {
+              if (prev != date) {
+                arr.push(obj)
+              }
+            } else {
+              arr.push(obj)
+            }
+            prev = date
+          })
+          setTime(arr)
+          // console.log(arr);
+
+        })
     })
   }
 
@@ -24,28 +57,76 @@ const App = () => {
     getLocation()
   }, [])
 
-  return (
-    <div style={divStyle}>
+  function getDate(it) {
+    // make a map that passes the values of arrDate and arrHour to formatDistance
+    let arrDate = time[it].date.split('-')
+    let arrHour = time[it].hour.split(':')
+    return formatDistance(
+      new Date(arrDate[0], arrDate[1] - 1, arrDate[2], arrHour[0], arrHour[1], arrHour[2]),
+      new Date(),
+      { addSuffix: true }
+    )
 
-      <h1>The Weather, {typeof data.coord != 'object' ? '...' : data.coord.lat}</h1>
-      <h2>{algo}</h2>
+  }
 
-
-      <div style={flexDiv}>
-        
-        {/* <Button txt='add' functio={() => setData(data + 1)} ></Button>
-        <Button txt='remove' functio={() => setData(data - 1)}></Button> */}
-
-        <Card data={data} clicker={()=>{setAlgo(algo +1)}}></Card>
-        <Card data={data}></Card>
-        <Card data={data}></Card>
-        <Card data={data}></Card>
-        <Card data={data}></Card>
+  if (typeof data.list != 'object') {
+    return (
+      <div style={divStyle}>
+        <h1>The Weather, {'...'} </h1>
+        <h2>Temperature: {'...'}</h2>
+        <div style={flexDiv}>
+          <Card data={data} clicker={() => { setAlgo(algo + 1) }}></Card>
+          <Card data={data}></Card>
+          <Card data={data}></Card>
+        </div>
       </div>
+    )
+  } else {
 
-    </div>
+    return (
+      <div style={divStyle}>
+        <h1>The Weather, {data.city.name} {typeof time[0] != 'undefined' ? getDate(0) : 'a'} </h1>
+        <h2>Temperature: {data.list[0].main.temp}</h2>
+        <div style={flexDiv}>
 
-  );
+          {time.map(e => {
+            key++
+            return <Shower data={e} key={key} log={() =>{ setSelected(e.date); console.log(selected);
+            }}></Shower>
+
+          })}
+
+        </div>
+
+        <div style={flexDiv}>
+
+          {( () => {
+            if (selected != '') {
+              let arr = []
+              for (let i = 0; i < time.length; i++) { 
+                if (selected == time[i].date) {
+                  console.log(time[i].date);
+                  
+
+                  arr.push(<NextTemp data={getDate(i)} key={i}></NextTemp>) 
+                  // console.log(arr);
+                }
+                
+              }
+
+            } else {
+              return <div></div>
+            }
+
+            })() 
+          }
+
+        </div>
+      </div>
+    )
+
+  }
+
 }
 const divStyle = {
   display: 'grid',
