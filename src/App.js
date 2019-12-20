@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Card } from "./components/Card"
-// import Boxi from './components/Box'
 import Button from './components/Button'
 import './App.css'
-// import Grid from './layout/Grid'
 import { Shower } from './components/Shower'
 import { NextTemp } from './components/nextTemp'
 
@@ -12,60 +10,87 @@ import format from 'date-fns/format'
 import { id, ar } from 'date-fns/locale'
 
 const App = () => {
-  let [data, setData] = useState({})
-  let [algo, setAlgo] = useState(0)
-
+  let [current, setCurrent] = useState('...')
   let [uniqueDate, setUniqueDate] = useState([])
-
   let [fullArr, setFullArray] = useState([])
-
   let [selected, setSelected] = useState('')
-
   let key = 0
+
   async function getLocation() {
     await navigator.geolocation.getCurrentPosition(async ({ coords }) => {
+
+      await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${coords.latitude}&lon=${coords.longitude}&units=metric&APPID=${process.env.REACT_APP_API_KEY}`)
+        .then(res => res.json())
+        .then(resJson => {setCurrent(resJson); console.log(resJson);
+        })
+
       await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${coords.latitude}&lon=${coords.longitude}&APPID=${process.env.REACT_APP_API_KEY}`)
         .then(res => res.json())
         .then(resJson => {
-          setData(resJson)
-          console.log(typeof resJson.city);
+          let fullArray = []
+          let uniqueDates = []
+          let prevDate = 0
 
-          let arr = []
-          let arrReduced = []
-          let prev = 0
+          let formatter = []
+          let objFormatter = []
 
-          resJson.list.forEach((wData) => {
+          resJson.list.forEach(allData => {
+            let arr = []
 
-            console.log(wData);
-            
-            let array = []
-            let dateAndHour = {}
-            let [date, hour] = wData.dt_txt.split(' ')
-            dateAndHour.date = date
-            dateAndHour.hour = hour
+            let [date, ] = allData.dt_txt.split(' ')
+            arr.push(date)
+            arr.push(allData)
+            fullArray.push(arr)
 
-            array.push(dateAndHour)
-            array.push(wData)
+            if (formatter.length > 0) {
+              if (prevDate != date) {
+                formatter.push(objFormatter)
+                uniqueDates.push(formatter)
+                formatter = []
+                objFormatter = []
 
-            arr.push(array)
-
-            if (arrReduced.length > 0) {
-              if (prev != date) {
-                arrReduced.push(dateAndHour)
+                formatter.push(date)
+                objFormatter.push(allData)
               }
+              objFormatter.push(allData)
+
             } else {
-              arrReduced.push(dateAndHour)
+              formatter.push(date)
+              objFormatter.push(allData)
             }
-            prev = date
+
+            prevDate = date
 
           })
-          console.log(arrReduced);
 
-          setUniqueDate(arrReduced)
-          console.log(typeof arr);
+          if (formatter != []) {
+            formatter.push(objFormatter)
+            uniqueDates.push(formatter)
+            formatter = []
+            objFormatter = []
+          }
 
-          setFullArray(arr)
+          console.log(uniqueDates);
+          
+          // uniqueDates.push(formatter)
 
+          // let conjunto = []
+          // uniqueDates.map(e => {
+          //   key++
+          //   let arr = []
+          //   fullArray.map(el =>{ 
+          //     if (el[0] == e){
+          //      arr.push(el[1])
+          //   }})
+          //   conjunto.push(arr)
+          // })
+          // console.log(conjunto);
+          
+          console.log(uniqueDates[0][0]);
+          
+          setUniqueDate(uniqueDates)
+          setFullArray(fullArray)
+          
         })
     })
   }
@@ -79,7 +104,6 @@ const App = () => {
 
     let arrDate = fullArr[it][0].date.split('-')
     let arrHour = fullArr[it][0].hour.split(':')
-    // console.log(fullArr);
 
     return formatDistance(
       new Date(arrDate[0], arrDate[1] - 1, arrDate[2], arrHour[0], arrHour[1], arrHour[2]),
@@ -88,75 +112,57 @@ const App = () => {
     )
   }
 
-  if (typeof data.city != 'object') {
+  const iconFormatter = str => `https://openweathermap.org/img/wn/${str}@2x.png`
+
+  let t0 = performance.now()
+
+
+  if (typeof uniqueDate[0] != 'object') {
     return (
       <div style={divStyle}>
         <h1>The Weather, {'...'} </h1>
         <h2>Temperature: {'...'}</h2>
         <div style={flexDiv}>
-          <Card data={data} clicker={() => { setAlgo(algo + 1) }}></Card>
-          <Card data={data}></Card>
-          <Card data={data}></Card>
-          <Card data={data}></Card>
-          <Card data={data}></Card>
+          <Card></Card>
+          <Card></Card>
+          <Card></Card>
+          <Card></Card>
+          <Card></Card>
+          <Card></Card>
         </div>
       </div>
     )
   } else {
 
     return (
+      
       <div style={divStyle}>
-        <h1>The Weather, {data.city.name} {typeof fullArr[0] != 'undefined' ? getDate(0) : 'a'} </h1>
-        <h2>Temperature: {data.list[0].main.temp}</h2>
-        <h2>date: {data.list[0].dt_txt}</h2>
-        <div style={flexDiv}>
+        <h1>The Weather, now in {current.name} </h1>
+        <h2>Temperature: {current.main.temp}°C</h2>
+        <h2>Humidity: {current.main.humidity}%</h2>
+        <img src={iconFormatter(current.weather[0].icon)}></img>
 
-          {
-            uniqueDate.map(e => {
-              key++
-
-              let arr = []
-              fullArr.map(el=>{
-                if (el[0].date == e.date) {
-                  arr.push(el[1])  
-                }
-              })
-
-              return <Shower time={e} fullArr={arr} id={key-1} key={key} log={() => {
-                setSelected(key); console.log(key)
-              }}></Shower>
-            })
-          }
-
+        <div style={left}>
+            { (() => typeof selected != 'string' ? <NextTemp fullArr={selected} key={1} ></NextTemp> : null)() }
         </div>
 
-        {/* <div style={flexDiv}>
+        <div style={flexDiv}>
+          
+          { uniqueDate.map(e => {
+              key++
 
-          {( () => {
-            if (selected != '') {
-              let arr = []
-              for (let i = 0; i < fullArr.length; i++) {
-                if (selected == fullArr[i].date) {
-                  console.log(fullArr[i].date);
-
-                  arr.push(<NextTemp data={getDate(i)} key={i} log={()=>{console.log('a');
-                  }} ></NextTemp>)
-                }
-
-              }
-
-            } else {
-              return <div></div>
-            }
-
-            })()
-          }
-
-        </div> */}
+              return <Shower date={e[0]} fullArr={e[1]} id={key-1} key={key} 
+              click={() => setSelected(e[1])}></Shower>
+            }) }
+        </div>
+        {(()=> {  let t1 = performance.now()
+                  console.log(t1-t0);})()}
+                  
       </div>
+      
     )
-
   }
+
 
 }
 const divStyle = {
@@ -172,6 +178,7 @@ const divStyle = {
 }
 
 const flexDiv = {
+  border: '1px solid red',
   display: 'flex',
   width: '100%',
   borderColor: '1px solid red',
@@ -180,5 +187,14 @@ const flexDiv = {
   justifyContent: 'space-evenly',
 }
 
+const left = {
+  border: '1px solid red',
+  position: 'absolute',
+  top: 0,
+  right: 0,
+  height: '90%',
+  width: 300,
+
+}
 
 export default App;

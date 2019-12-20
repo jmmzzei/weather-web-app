@@ -1,24 +1,9 @@
-import React from 'react';
-import {NextTemp} from './nextTemp'
+import React, { useState } from 'react';
 
-export const Shower = ({time, log, fullArr, id}) => {
-    let keyChild = 0
-    console.group(id)
-    console.log(time.date);
-    console.log(fullArr);
-    console.groupEnd()
-
+export const Shower = ({date, click}) => {
     return(
-        <div style={showerStyle} onClick={log}>
-            <h2>{time.date}</h2>
-            <h2>{time.hour}</h2>
-            
-            {fullArr.map(e => {
-            keyChild++
-            return <NextTemp time={e} fullArr={e} key={keyChild} log={log}></NextTemp>
-
-          })}
-            
+        <div style={showerStyle} onClick={click}>
+            <h2>{date}</h2>
         </div>
     )
 }
@@ -33,6 +18,7 @@ const showerStyle = {
     margin: 10,
     borderRadius: 20,
     padding: 8,
+    background: '#fff'
   }
   
   

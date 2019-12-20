@@ -1,12 +1,9 @@
 import React from 'react';
 
 export const Card = props => {
-    // console.log(props.data.name);
-    
     return(
-        <div style={cardStyle} onClick={props.clicker}>
-            <h1>{typeof props.data.coord != 'object' ? '...' : props.data.name}</h1>
-            <h2>{typeof props.data.coord != 'object' ? '...' : Math.floor(props.data.main.temp)}</h2>
+        <div style={cardStyle}>
+            <h1>...</h1>
         </div>
     )
 }
