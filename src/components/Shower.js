@@ -1,10 +1,24 @@
 import React from 'react';
+import {NextTemp} from './nextTemp'
 
-export const Shower = ({data, log}) => {
+export const Shower = ({time, log, fullArr, id}) => {
+    let keyChild = 0
+    console.group(id)
+    console.log(time.date);
+    console.log(fullArr);
+    console.groupEnd()
+
     return(
         <div style={showerStyle} onClick={log}>
-            <h2>{data.date}</h2>
-            <h4>Temperature: {data.wData.main.temp}</h4>
+            <h2>{time.date}</h2>
+            <h2>{time.hour}</h2>
+            
+            {fullArr.map(e => {
+            keyChild++
+            return <NextTemp time={e} fullArr={e} key={keyChild} log={log}></NextTemp>
+
+          })}
+            
         </div>
     )
 }

@@ -7,8 +7,6 @@ export const Card = props => {
         <div style={cardStyle} onClick={props.clicker}>
             <h1>{typeof props.data.coord != 'object' ? '...' : props.data.name}</h1>
             <h2>{typeof props.data.coord != 'object' ? '...' : Math.floor(props.data.main.temp)}</h2>
-            <h2>{typeof props.data.coord != 'object' ? '...' : props.data.main.humidity}</h2>
-            <h2>{typeof props.data.coord != 'object' ? '...' : props.data.wind.speed}</h2>
         </div>
     )
 }

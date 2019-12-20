@@ -1,10 +1,12 @@
 import React from 'react';
 
-export const NextTemp = ({data}) => {
+export const NextTemp = ({time, log, fullArr, keyChild}) => {
+    console.log();
+    
     return(
-        <div style={showerStyle}>
-            <h2>{data}</h2>
-            {/* <h4>Temperature: {data.wData.main.temp}</h4> */}
+        <div style={showerStyle} >
+            <h4>Date: {typeof fullArr != 'object' ? '...' : fullArr.dt_txt}</h4>
+            <h4>Temperature: {typeof fullArr != 'object' ? '...' : fullArr.main.temp}</h4>
         </div>
     )
 }

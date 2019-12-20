@@ -9,13 +9,15 @@ import { NextTemp } from './components/nextTemp'
 
 import { formatDistance, subDays } from 'date-fns'
 import format from 'date-fns/format'
-import { id } from 'date-fns/locale'
+import { id, ar } from 'date-fns/locale'
 
 const App = () => {
   let [data, setData] = useState({})
   let [algo, setAlgo] = useState(0)
 
-  let [time, setTime] = useState([])
+  let [uniqueDate, setUniqueDate] = useState([])
+
+  let [fullArr, setFullArray] = useState([])
 
   let [selected, setSelected] = useState('')
 
@@ -26,28 +28,43 @@ const App = () => {
         .then(res => res.json())
         .then(resJson => {
           setData(resJson)
-          console.log(resJson);
+          console.log(typeof resJson.city);
 
           let arr = []
+          let arrReduced = []
           let prev = 0
+
           resJson.list.forEach((wData) => {
+
+            console.log(wData);
+            
+            let array = []
+            let dateAndHour = {}
             let [date, hour] = wData.dt_txt.split(' ')
-            let temp = wData.main.temp
+            dateAndHour.date = date
+            dateAndHour.hour = hour
 
-            // let obj = {date, temp}
-            let obj = { date, hour, wData }
+            array.push(dateAndHour)
+            array.push(wData)
 
-            if (arr.length > 0) {
+            arr.push(array)
+
+            if (arrReduced.length > 0) {
               if (prev != date) {
-                arr.push(obj)
+                arrReduced.push(dateAndHour)
               }
             } else {
-              arr.push(obj)
+              arrReduced.push(dateAndHour)
             }
             prev = date
+
           })
-          setTime(arr)
-          // console.log(arr);
+          console.log(arrReduced);
+
+          setUniqueDate(arrReduced)
+          console.log(typeof arr);
+
+          setFullArray(arr)
 
         })
     })
@@ -59,23 +76,27 @@ const App = () => {
 
   function getDate(it) {
     // make a map that passes the values of arrDate and arrHour to formatDistance
-    let arrDate = time[it].date.split('-')
-    let arrHour = time[it].hour.split(':')
+
+    let arrDate = fullArr[it][0].date.split('-')
+    let arrHour = fullArr[it][0].hour.split(':')
+    // console.log(fullArr);
+
     return formatDistance(
       new Date(arrDate[0], arrDate[1] - 1, arrDate[2], arrHour[0], arrHour[1], arrHour[2]),
       new Date(),
       { addSuffix: true }
     )
-
   }
 
-  if (typeof data.list != 'object') {
+  if (typeof data.city != 'object') {
     return (
       <div style={divStyle}>
         <h1>The Weather, {'...'} </h1>
         <h2>Temperature: {'...'}</h2>
         <div style={flexDiv}>
           <Card data={data} clicker={() => { setAlgo(algo + 1) }}></Card>
+          <Card data={data}></Card>
+          <Card data={data}></Card>
           <Card data={data}></Card>
           <Card data={data}></Card>
         </div>
@@ -85,43 +106,53 @@ const App = () => {
 
     return (
       <div style={divStyle}>
-        <h1>The Weather, {data.city.name} {typeof time[0] != 'undefined' ? getDate(0) : 'a'} </h1>
+        <h1>The Weather, {data.city.name} {typeof fullArr[0] != 'undefined' ? getDate(0) : 'a'} </h1>
         <h2>Temperature: {data.list[0].main.temp}</h2>
+        <h2>date: {data.list[0].dt_txt}</h2>
         <div style={flexDiv}>
 
-          {time.map(e => {
-            key++
-            return <Shower data={e} key={key} log={() =>{ setSelected(e.date); console.log(selected);
-            }}></Shower>
+          {
+            uniqueDate.map(e => {
+              key++
 
-          })}
+              let arr = []
+              fullArr.map(el=>{
+                if (el[0].date == e.date) {
+                  arr.push(el[1])  
+                }
+              })
+
+              return <Shower time={e} fullArr={arr} id={key-1} key={key} log={() => {
+                setSelected(key); console.log(key)
+              }}></Shower>
+            })
+          }
 
         </div>
 
-        <div style={flexDiv}>
+        {/* <div style={flexDiv}>
 
           {( () => {
             if (selected != '') {
               let arr = []
-              for (let i = 0; i < time.length; i++) { 
-                if (selected == time[i].date) {
-                  console.log(time[i].date);
-                  
+              for (let i = 0; i < fullArr.length; i++) {
+                if (selected == fullArr[i].date) {
+                  console.log(fullArr[i].date);
 
-                  arr.push(<NextTemp data={getDate(i)} key={i}></NextTemp>) 
-                  // console.log(arr);
+                  arr.push(<NextTemp data={getDate(i)} key={i} log={()=>{console.log('a');
+                  }} ></NextTemp>)
                 }
-                
+
               }
 
             } else {
               return <div></div>
             }
 
-            })() 
+            })()
           }
 
-        </div>
+        </div> */}
       </div>
     )
 
