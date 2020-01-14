@@ -1,0 +1,11 @@
+.main{
+    grid-area: main;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    &>p{
+        font-size: 40px;
+    }
+}
