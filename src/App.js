@@ -1,9 +1,7 @@
 import React, { useState } from "react"
-import { Card } from "./components/Card"
-import "./App.css"
 import "./css/style.scss"
 import { FooterCard } from "./components/FooterCard"
-import { NextTemp } from "./components/nextTemp"
+import { AsideGroup } from "./components/AsideGroup"
 import fetchWeather from "./hooks/fetchWeather"
 import getDate from "./helpers/getDate"
 
@@ -21,12 +19,12 @@ const App = () => {
 				<main className="main"></main>
 
 				<section className="footer">
-					<Card></Card>
-					<Card></Card>
-					<Card></Card>
-					<Card></Card>
-					<Card></Card>
-					<Card></Card>
+					<FooterCard></FooterCard>
+					<FooterCard></FooterCard>
+					<FooterCard></FooterCard>
+					<FooterCard></FooterCard>
+					<FooterCard></FooterCard>
+					<FooterCard></FooterCard>
 				</section>
 			</div>
 		)
@@ -44,7 +42,7 @@ const App = () => {
 				<aside className="aside">
 					{(() =>
 						typeof selected != "string" ? (
-							<NextTemp fullArr={selected} key={1}></NextTemp>
+							<AsideGroup fullArr={selected} key={1}></AsideGroup>
 						) : null)()}
 				</aside>
 

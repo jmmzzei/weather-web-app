@@ -1,6 +1,7 @@
 import React from 'react'
 
-export const Tester = ({ fullArr, date, hour }) => {
+export const AsideCard = ({ fullArr, date, hour }) => {
+    
     return (
         <div className="asideCard">
             <h4>{typeof fullArr != 'object' ? '...' : fullArr.main.temp}</h4>
