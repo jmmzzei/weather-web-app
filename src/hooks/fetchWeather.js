@@ -18,7 +18,7 @@ export default () => {
 
 	const fetchForecastWeather = async coords => {
 		await fetch(
-			`https://api.openweathermap.org/data/2.5/forecast?lat=${coords.latitude}&lon=${coords.longitude}&APPID=${process.env.REACT_APP_API_KEY}`
+			`https://api.openweathermap.org/data/2.5/forecast?lat=${coords.latitude}&lon=${coords.longitude}&units=metric&APPID=${process.env.REACT_APP_API_KEY}`
 		)
 			.then(res => res.json())
 			.then(resJson => {
@@ -38,7 +38,7 @@ export default () => {
 					fullArray.push(arr)
 
 					if (formatter.length > 0) {
-						if (prevDate != date) {
+						if (prevDate !== date) {
 							formatter.push(objFormatter)
 							uniqueDates.push(formatter)
 							formatter = []
@@ -56,7 +56,7 @@ export default () => {
 					prevDate = date
 				})
 
-				if (formatter != []) {
+				if (formatter !== []) {
 					formatter.push(objFormatter)
 					uniqueDates.push(formatter)
 					formatter = []
@@ -65,6 +65,7 @@ export default () => {
 
 				setUniqueDate(uniqueDates)
 				setFullArray(fullArray)
+				
 
 				return { uniqueDate, fullArr }
 			})

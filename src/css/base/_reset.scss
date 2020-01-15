@@ -3,6 +3,12 @@
     // font-size: 62.5%;
 }
 
+::selection{
+    background: $primary;
+    color: white;
+    padding: 5px;
+}
+
 body,
 html{
     margin: 0;

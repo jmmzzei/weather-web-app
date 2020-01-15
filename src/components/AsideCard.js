@@ -1,11 +1,12 @@
-import React from 'react'
+import React from "react"
 
-export const AsideCard = ({ fullArr, date, hour }) => {
-    
-    return (
-        <div className="asideCard">
-            <h4>{typeof fullArr != 'object' ? '...' : fullArr.main.temp}</h4>
-            <h4>{typeof fullArr != 'object' ? '...' : hour}hs</h4>
-        </div>
-    )
+export const AsideCard = ({ click, fullArr, date, hour }) => {
+	return (
+		<div className="asideCard" onClick={click}>
+			<h4>{typeof fullArr != "object" ? "..." : fullArr.main.temp}°C</h4>
+			<h4>
+				{typeof fullArr != "object" ? "..." : hour.split("").slice(0, -3).join("")}hs
+			</h4>
+		</div>
+	)
 }
