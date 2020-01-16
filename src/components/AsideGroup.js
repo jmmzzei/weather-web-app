@@ -1,14 +1,14 @@
-import React, { useState } from "react"
+import React from "react"
 import { AsideCard } from "./AsideCard"
 
+
 let key = 0
-export const AsideGroup = ({ fullArr, click }) => {
+export const AsideGroup = ({ fullArr }) => {
 	
 	return fullArr.map(e => {
 		let [date, hour] = e.dt_txt.split(" ")
 		return (
 			<AsideCard
-                click={click}
 				fullArr={e}
 				date={date}
 				hour={hour}
@@ -17,3 +17,5 @@ export const AsideGroup = ({ fullArr, click }) => {
 		)
 	})
 }
+
+
