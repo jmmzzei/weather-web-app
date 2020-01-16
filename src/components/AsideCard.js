@@ -1,15 +1,12 @@
-import React, {useContext} from "react"
-import {Context} from './Context'
+import React, { useContext } from "react"
+import { Context } from './Context'
 
 export const AsideCard = ({ fullArr, date, hour }) => {
-
-	const {main, setMain} = useContext(Context)
-
-	// console.log(selected);
+	const { setMain } = useContext(Context)
 
 	return (
-		<div className="asideCard" onClick={() => {setMain(fullArr)
-		console.log(fullArr);
+		<div className="asideCard" onClick={() => {
+			setMain(fullArr)
 		}} >
 			<h4>{typeof fullArr != "object" ? "..." : fullArr.main.temp}°C</h4>
 			<h4>

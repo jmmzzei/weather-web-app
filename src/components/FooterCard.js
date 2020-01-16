@@ -6,6 +6,7 @@ export const FooterCard = ({date, click}) => {
             <h2>{date ? date : ''}</h2>
         </div>
     )
+
 }
 
 

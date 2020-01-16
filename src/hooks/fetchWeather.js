@@ -66,7 +66,6 @@ export default () => {
 				setUniqueDate(uniqueDates)
 				setFullArray(fullArray)
 				
-
 				return { uniqueDate, fullArr }
 			})
     }
