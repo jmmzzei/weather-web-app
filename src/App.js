@@ -12,12 +12,14 @@ import Footer from "./components/Footer"
 const App = () => {
 	let [selected, setSelected] = useState("")
 
-	const change = (e) => 
+	const change = (e) =>{
 		setSelected(e)
-	
+		console.log(e);
+		
+	}
 
 	const { current, uniqueDate, fullArr } = fetchWeather()
-	
+
 	if (typeof uniqueDate[0] !== "object") {
 		return (
 			<div className="grid">
@@ -41,10 +43,10 @@ const App = () => {
 				<div className="grid">
 					<Title current={current}></Title>
 					<Main current={current}></Main>
-					
+
 					<Aside selected={selected}></Aside>
 					<Footer
-					selected= {selected}
+						selected={selected}
 						uniqueDate={uniqueDate}
 						change={change}
 					></Footer>
