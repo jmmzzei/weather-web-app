@@ -28,6 +28,7 @@ export default () => {
 
 				let formatter = []
 				let objFormatter = []
+				let arrayNumber = 0
 
 				resJson.list.forEach(allData => {
 					let arr = []
@@ -38,9 +39,17 @@ export default () => {
 					fullArray.push(arr)
 
 					if (formatter.length > 0) {
+
 						if (prevDate !== date) {
+
+							if (arrayNumber !== 0){
+								objFormatter.shift()
+							}
+							arrayNumber++
+
 							formatter.push(objFormatter)
 							uniqueDates.push(formatter)
+
 							formatter = []
 							objFormatter = []
 
@@ -57,12 +66,13 @@ export default () => {
 				})
 
 				if (formatter !== []) {
+					objFormatter.shift()
 					formatter.push(objFormatter)
 					uniqueDates.push(formatter)
 					formatter = []
 					objFormatter = []
 				}
-
+				
 				setUniqueDate(uniqueDates)
 				setFullArray(fullArray)
 				
