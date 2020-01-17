@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
 import { Context } from './Context'
 
-export default ({ current }) => {
+export default () => {
     let { main } = useContext(Context)
     const iconFormatter = str =>
         `https://openweathermap.org/img/wn/${str}@2x.png`
@@ -10,7 +10,7 @@ export default ({ current }) => {
         <main className="main">
             <div className="dateAndTemp">
                 <p>
-                    {current.main.temp}°C
+                    {main.main.temp}°C
 					<img
                         alt="Icon Weather"
                         src={iconFormatter(main.weather[0].icon)}

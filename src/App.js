@@ -14,8 +14,6 @@ const App = () => {
 
 	const change = (e) =>{
 		setSelected(e)
-		console.log(e);
-		
 	}
 
 	const { current, uniqueDate, fullArr } = fetchWeather()
