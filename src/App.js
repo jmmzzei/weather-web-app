@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import "./css/style.scss"
 import { FooterCard } from "./components/FooterCard"
 import fetchWeather from "./hooks/fetchWeather"
@@ -11,10 +11,29 @@ import Footer from "./components/Footer"
 
 const App = () => {
 	let [selected, setSelected] = useState("")
+	let [date, setDate] = useState('')
 
-	const change = (e) =>{
+	const changeSelected = e => {
 		setSelected(e)
 	}
+
+	const changeDate = e => {
+		setDate(e)
+	}
+
+	const timeNow = () => {
+        let timeLength = 10
+        let date = new Date(Date.now())
+        let arr = date.toString()
+        let { index } = /GMT/.exec(arr)
+        return arr.slice(0, index - timeLength)
+	}
+
+	useEffect(() => {
+		const currentDate = timeNow()
+		setDate(currentDate)
+	}, [])
+
 
 	const { current, uniqueDate, fullArr } = fetchWeather()
 
@@ -22,7 +41,6 @@ const App = () => {
 		return (
 			<div className="grid">
 				<h1 className="title">{current.name}</h1>
-
 				<main className="main"></main>
 				<aside className="aside"></aside>
 				<section className="footer">
@@ -40,13 +58,13 @@ const App = () => {
 			<ContextWrapper current={current}>
 				<div className="grid">
 					<Title current={current}></Title>
-					<Main current={current}></Main>
+					<Main date={date}></Main>
 
-					<Aside selected={selected}></Aside>
+					<Aside selected={selected} dateHandler={changeDate}></Aside>
 					<Footer
 						selected={selected}
 						uniqueDate={uniqueDate}
-						change={change}
+						click={changeSelected}
 					></Footer>
 				</div>
 			</ContextWrapper>

@@ -1,11 +1,12 @@
 import React, { useContext } from "react"
 import { Context } from './Context'
 
-export default () => {
+export default ({ date }) => {
     let { main } = useContext(Context)
     const iconFormatter = str =>
         `https://openweathermap.org/img/wn/${str}@2x.png`
 
+    
     return (
         <main className="main">
             <div className="dateAndTemp">
@@ -18,13 +19,7 @@ export default () => {
                 </p>
 
                 <h3>
-                    {(() => {
-                        let timeLength = 10
-                        let date = new Date(Date.now())
-                        let arr = date.toString()
-                        let { index } = /GMT/.exec(arr)
-                        return arr.slice(0, index - timeLength)
-                    })()}
+                    {date}
                 </h3>
             </div>
 

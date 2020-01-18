@@ -1,7 +1,7 @@
 import React from "react"
 import { FooterCard } from "./FooterCard";
 
-export default ({ uniqueDate, change }) => {
+export default ({ uniqueDate, click }) => {
     let key = 0
     return (
         <section className="footer">
@@ -14,7 +14,7 @@ export default ({ uniqueDate, change }) => {
                         fullArr={e[1]}
                         id={key - 1}
                         key={key}
-                        click={() => change(e[1])}
+                        click={() => click(e[1])}
                     ></FooterCard>
                 )
             })}

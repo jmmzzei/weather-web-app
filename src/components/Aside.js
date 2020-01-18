@@ -1,7 +1,7 @@
 import React from "react"
 import { AsideGroup } from "./AsideGroup";
 
-export default ({ selected }) => {
+export default ({ selected, dateHandler }) => {
     return (
         <aside className="aside">
             {(() =>
@@ -9,6 +9,7 @@ export default ({ selected }) => {
                     <AsideGroup
                         fullArr={selected}
                         key={1}
+                        dateHandler={dateHandler}
                     ></AsideGroup>
                 ) : null)()}
         </aside>

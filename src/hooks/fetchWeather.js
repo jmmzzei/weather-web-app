@@ -10,6 +10,7 @@ export default () => {
     async function getLocation() {
 		await navigator.geolocation.getCurrentPosition(async ({ coords }) => {
 			let response = await fetchCurrentWeather(coords)
+			
 			setCurrent(response)
 
 			let {resUnique, resFull} = await fetchForecastWeather(coords, uniqueDate, fullArr)

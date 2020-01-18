@@ -1,7 +1,7 @@
 import React from "react"
 import { AsideCard } from "./AsideCard"
 
-export const AsideGroup = ({ fullArr }) => {
+export const AsideGroup = ({ fullArr, dateHandler }) => {
 	let key = 0
 
 	return fullArr.map(e => {
@@ -12,6 +12,7 @@ export const AsideGroup = ({ fullArr }) => {
 				date={date}
 				hour={hour}
 				key={++key}
+				dateHandler={dateHandler}
 			></AsideCard>
 		)
 	})
