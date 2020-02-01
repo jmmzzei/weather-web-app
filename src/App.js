@@ -26,12 +26,12 @@ const App = () => {
 				<main className="main"></main>
 				<aside className="aside"></aside>
 				<section className="footer">
-					<FooterCard></FooterCard>
-					<FooterCard></FooterCard>
-					<FooterCard></FooterCard>
-					<FooterCard></FooterCard>
-					<FooterCard></FooterCard>
-					<FooterCard></FooterCard>
+					<FooterCard />
+					<FooterCard />
+					<FooterCard />
+					<FooterCard />
+					<FooterCard />
+					<FooterCard />
 				</section>
 			</div>
 		)
@@ -39,15 +39,13 @@ const App = () => {
 		return (
 			<ContextWrapper current={current}>
 				<div className="grid">
-					<Title current={current}></Title>
-					<Main current={current}></Main>
+					<Title current={current} />
+					<Main current={current} />
 
-					<Aside selected={selected}></Aside>
+					<Aside selected={selected} />
 					<Footer
-						selected={selected}
 						uniqueDate={uniqueDate}
-						change={change}
-					></Footer>
+						change={change} />
 				</div>
 			</ContextWrapper>
 		)
