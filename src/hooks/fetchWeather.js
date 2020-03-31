@@ -12,7 +12,7 @@ export default () => {
 			let response = await fetchCurrentWeather(coords)
 			setCurrent(response)
 
-			let {resUnique, resFull} = await fetchForecastWeather(coords, uniqueDate, fullArr)
+			let {resUnique, resFull} = await fetchForecastWeather(coords)
 			setUniqueDate(resUnique)
             setFullArray(resFull)
 		})
