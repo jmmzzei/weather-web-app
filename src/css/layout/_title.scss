@@ -8,4 +8,14 @@
     margin: 0;
     background: $accent;
     font-size: 60px;
+    animation: showText .3s forwards ease;
+}
+
+@keyframes showText{
+    0%{
+        color: #ffffff00;
+    }
+    100%{
+        color: #ffffff;
+    }
 }
