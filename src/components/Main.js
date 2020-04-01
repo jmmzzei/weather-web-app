@@ -1,68 +1,37 @@
 import React, { useContext } from "react"
 import { Context } from './Context'
+import Label from './Label'
+import DateAndTemp from './DateAndTemp'
+import WeatherData from './WeatherData'
+import MainLayout from './MainLayout'
 
 export default ({ date }) => {
     let { main } = useContext(Context)
-    const iconFormatter = str =>
-        `https://openweathermap.org/img/wn/${str}@2x.png`
 
-    
     return (
-        <main className="main">
-            <div className="dateAndTemp">
-                <p>
-                    {main.main.temp}°C
-					<img
-                        alt="Icon Weather"
-                        src={iconFormatter(main.weather[0].icon)}
-                    ></img>
-                </p>
+        <MainLayout>
+            <DateAndTemp date={date}/>
+            <WeatherData>
+                <Label text="Humidity" value={main.main.humidity}/>
+                <Label text="Pressure" value={main.main.pressure}/>
+                <Label text="Min" value={main.main.temp_min}/>
+                <Label text="Max" value={main.main.temp_max}/>
+                <Label text="Clouds" value={main.clouds.all}/>
 
-                <h3>
-                    {date}
-                </h3>
-            </div>
+                {main.visibility
+                    &&
+                    <Label text="Visibility" value={main.visibility}/>}
 
-            <div className="weatherData">
-                <p>
-                    <span>Humidity:</span> {main.main.humidity}%
-				</p>
-                <p>
-                    <span>Pressure:</span> {main.main.pressure}
-                    hPa
-				</p>
-                <p>
-                    <span>Min:</span> {main.main.temp_min}°C
-				</p>
-                <p>
-                    <span>Max:</span> {main.main.temp_max}°C
-				</p>
-
-                {main.visibility 
-                ? <p>Visibility:<span>{main.visibility}</span>km</p>
-                : <span></span>
-                }
-
-                <p>
-                    <span>Wind:</span> {main.wind.deg}° <span>at</span>{" "}
-                    {main.wind.speed} m/s
-				</p>
-
-                <p>
-                    <span>Clouds:</span> {main.clouds.all}%
-				</p>
+                <Label text="Wind" value={main.wind.deg} winSpeed={main.wind.speed}/>
 
                 {main.sys.sunrise
-                ? <p>Sunrise: <span>{main.sys.sunrise}</span> </p>
-                : <span></span>
-                }
+                    &&
+                    <Label text="Sunrise" value={main.sys.sunrise}/> }
 
-                {main.sys.sunrise
-                ? <p>Sunset: <span>{main.sys.sunset}</span> </p>
-                : <span></span>
-                }
-
-            </div>
-        </main>
+                {main.sys.sunset
+                    && 
+                    <Label text="Sunset" value={main.sys.sunset}/> }
+            </WeatherData>
+        </MainLayout>
     )
 }
