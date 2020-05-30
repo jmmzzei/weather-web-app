@@ -1,13 +1,12 @@
 @import '../components/weatherData';
 @import '../components/dateAndTemp';
 
-.main{
-    grid-area: main;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    flex-direction: column;
-    padding: 20px;
-    position: relative;
-    
+.main {
+  grid-area: main;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+  padding: 20px;
+  position: relative;
 }

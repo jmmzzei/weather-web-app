@@ -1,8 +1,18 @@
 @import '../components/asideCard';
 
 .aside {
-    grid-area: aside;
-    padding: 10px;
-    overflow-y: scroll;
-    box-shadow: -3px 0 0.4em #00000030;
+  grid-area: aside;
+  padding: 10px;
+  overflow-y: scroll;
+  box-shadow: -3px 0 0.4em #00000030;
+  animation: appear 0.5s ease forwards;  
+  opacity: 0;
 }
+
+@keyframes appear{
+  100%{
+    opacity: 1;
+  }
+}
+
+

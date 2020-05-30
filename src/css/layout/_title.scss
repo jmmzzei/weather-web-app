@@ -1,21 +1,17 @@
-.title{
-    color: white;
-    grid-area: title;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    margin: 0;
-    background: $accent;
-    font-size: 60px;
-    animation: showText .3s forwards ease;
+.title {
+  grid-area: title;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 0;
+  color: black;
+  font-size: 60px;
+  animation: showText 0.3s forwards ease;
 }
 
-@keyframes showText{
-    0%{
-        color: #ffffff00;
-    }
-    100%{
-        color: #ffffff;
-    }
+@keyframes showText {
+  100% {
+    color: black;
+  }
 }
