@@ -1,5 +1,3 @@
-import React from "react"
+import React from 'react'
 
-export default ({children}) => (
-<main className="main">{children}</main>
-)
+export default ({ children }) => <main className="main">{children}</main>

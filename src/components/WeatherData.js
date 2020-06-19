@@ -1,7 +1,5 @@
-import React from "react"
+import React from 'react'
 
-export default ({children}) => (
-    <section className="weatherData">
-        {children}
-    </section>
+export default ({ children }) => (
+  <section className="weatherData">{children}</section>
 )
