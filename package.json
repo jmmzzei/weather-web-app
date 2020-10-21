@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@emotion/core": "^10.0.28",
-    "@mdx-js/react": "^1.6.6",
+    "@emotion/core": "^10.0.35",
+    "@mdx-js/react": "^1.6.19",
     "@rebass/preset": "^4.0.5",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -13,9 +13,9 @@
     "axios": "^0.19.2",
     "emotion-theming": "^10.0.27",
     "node-sass": "^4.14.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-scripts": "3.3.0",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
+    "react-scripts": "^3.4.4",
     "rebass": "^4.0.7",
     "theme-ui": "^0.2.52"
   },
@@ -41,8 +41,8 @@
     ]
   },
   "devDependencies": {
-    "date-fns": "^2.14.0",
-    "react-test-renderer": "^16.13.1",
+    "date-fns": "^2.16.1",
+    "react-test-renderer": "^16.14.0",
     "styled-components": "^4.4.1"
   }
 }
