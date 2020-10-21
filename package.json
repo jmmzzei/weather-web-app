@@ -10,7 +10,7 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "@types/jest": "^25.2.3",
-    "axios": "^0.19.2",
+    "axios": "^0.20.0",
     "emotion-theming": "^10.0.27",
     "node-sass": "^4.14.1",
     "react": "^16.14.0",
