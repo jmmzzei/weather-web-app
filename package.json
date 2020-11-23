@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@emotion/core": "^10.1.0",
+    "@emotion/core": "^10.1.1",
     "@mdx-js/react": "^1.6.19",
     "@rebass/preset": "^4.0.5",
     "@testing-library/jest-dom": "^4.2.4",
