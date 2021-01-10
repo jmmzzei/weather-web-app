@@ -17,7 +17,7 @@
     "react-dom": "^16.14.0",
     "react-scripts": "^3.4.4",
     "rebass": "^4.0.7",
-    "theme-ui": "^0.3.1"
+    "theme-ui": "^0.3.3"
   },
   "scripts": {
     "start": "react-scripts start",
