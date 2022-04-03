@@ -1,4 +1,3 @@
-import React from 'react'
 import { FooterCard } from './FooterCard'
 
 type Props = {

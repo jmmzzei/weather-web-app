@@ -25,7 +25,7 @@ const App = () => {
         <main className="main">
           <Loading />
         </main>
-        <Aside selected="" />
+        <Aside />
         <Footer />
       </Grid>
     )
