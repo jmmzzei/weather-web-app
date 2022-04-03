@@ -2,22 +2,27 @@ import { useState, useEffect } from 'react'
 import fetchCurrentWeather from '../helpers/fetchCurrentWeather'
 import fetchForecastWeather from '../helpers/fetchForecastWeather'
 
-export default () => {
-  let [currentWeather, setCurrentWeather] = useState('...')
-  let [uniqueDate, setUniqueDate] = useState([])
+type Weather = {
+  currentWeather?: any
+  uniqueDate?: any
+}
 
-  function getLocation() {
+const useFetch = () => {
+  let [data, setData] = useState<Weather>({})
+
+  const getWeather = () => {
     navigator.geolocation.getCurrentPosition(async ({ coords }) => {
       let current = await fetchCurrentWeather(coords)
-      setCurrentWeather(current)
       let { resUnique } = await fetchForecastWeather(coords)
-      setUniqueDate(resUnique)
+      setData({ currentWeather: current, uniqueDate: resUnique })
     })
   }
 
   useEffect(() => {
-    getLocation()
+    getWeather()
   }, [])
 
-  return { currentWeather, uniqueDate }
+  return data
 }
+
+export default useFetch

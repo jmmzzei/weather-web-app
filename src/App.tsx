@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './css/style.scss'
-import fetchWeather from './hooks/fetchWeather'
+import useFetch from './hooks/useFetch'
 import ContextWrapper from './components/ContextWrapper'
 import Aside from './components/Aside'
 import Title from './components/Title'
@@ -54,8 +54,8 @@ type ForecastItem = {
 }
 
 type Weather = {
-  currentWeather: any
-  uniqueDate: any
+  currentWeather?: any
+  uniqueDate?: any
 }
 
 const App = () => {
@@ -65,24 +65,26 @@ const App = () => {
     setSelected(e)
   }
 
-  const { currentWeather, uniqueDate }: Weather = fetchWeather()
+  const { currentWeather, uniqueDate }: Weather = useFetch()
 
-  return typeof uniqueDate[0] !== 'object' ? (
-    <Grid>
-      <Title />
+  if (!uniqueDate) {
+    return (
+      <Grid>
+        <Title />
+        <main className="main">
+          <Loading />
+        </main>
+        <Aside selected="" />
+        <Footer />
+      </Grid>
+    )
+  }
 
-      <main className="main">
-        <Loading />
-      </main>
-      <Aside selected="" />
-      <Footer />
-    </Grid>
-  ) : (
+  return (
     <ContextWrapper current={currentWeather}>
       <Grid>
         <Title title={currentWeather} />
-        <Main date={currentWeather.date} />
-
+        <Main date={currentWeather?.date} />
         <Aside selected={selected} />
         <Footer uniqueDate={uniqueDate} click={change} />
       </Grid>
