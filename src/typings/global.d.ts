@@ -55,9 +55,19 @@ type CurrentSys = {
   type: number
 }
 
-interface CurrentWeather extends Omit<ForecastItem, 'dt_txt' | 'pop' | 'sys'> {
+type CurrentMain = {
+  feels_like: number
+  humidity: number
+  pressure: number
+  temp_max: number
+  temp_min: number
+}
+
+interface CurrentWeather
+  extends Omit<ForecastItem, 'dt_txt' | 'pop' | 'sys' | 'main'> {
   base: string
   cod: number
+  main: CurrentMain
   coord: Coord
   id: number
   name: string

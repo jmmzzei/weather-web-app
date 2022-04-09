@@ -1,29 +1,24 @@
-import { FC, useContext } from 'react'
+import { FC, useContext, useEffect } from 'react'
 import { Context } from './Context'
 import Label from './Label'
 import DateAndTemp from './DateAndTemp'
-import WeatherData from './WeatherData'
 import MainLayout from './MainLayout'
+import useFetch from '../hooks/useFetch'
 
-type Props = {
-  date?: string
-}
+const Main: FC = () => {
+  let { main, setMain } = useContext(Context)
+  const [{ currentWeather }]: any = useFetch('current')
+  const { clouds, visibility, wind } = main || {}
+  const { humidity, pressure, temp_min, temp_max } = main?.main || {}
 
-const Main: FC<Props> = ({ date }) => {
-  let { main } = useContext(Context)
-
-  const {
-    main: { humidity, pressure, temp_min, temp_max },
-    clouds,
-    visibility,
-    wind,
-    sys,
-  } = main
+  useEffect(() => {
+    setMain(currentWeather)
+  }, [currentWeather, setMain])
 
   return (
     <MainLayout>
-      <DateAndTemp date={date} />
-      <WeatherData>
+      <DateAndTemp />
+      <section className="weatherData">
         <Label text="Humidity" value={humidity} />
         <Label text="Pressure" value={pressure} />
         <Label text="Min" value={temp_min} />
@@ -31,9 +26,7 @@ const Main: FC<Props> = ({ date }) => {
         <Label text="Clouds" value={clouds?.all} />
         <Label text="Visibility" value={visibility} />
         <Label text="Wind" value={wind?.deg} winSpeed={wind?.speed} />
-        <Label text="Sunrise" value={sys?.sunrise} />
-        <Label text="Sunset" value={sys?.sunset} />
-      </WeatherData>
+      </section>
     </MainLayout>
   )
 }

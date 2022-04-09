@@ -1,11 +1,13 @@
 import { FooterCard } from './FooterCard'
+import useFetch from '../hooks/useFetch'
 
 type Props = {
-  uniqueDate?: any[]
   click?: any
 }
 
-const Footer = ({ uniqueDate, click }: Props) => {
+const Footer = ({ click }: Props) => {
+  const [{ uniqueDate }]: any = useFetch('forecast')
+
   if (!uniqueDate) {
     return (
       <footer className="footer">
@@ -21,7 +23,7 @@ const Footer = ({ uniqueDate, click }: Props) => {
   return (
     <footer className="footer">
       {uniqueDate.map(
-        (e) =>
+        (e: any) =>
           e[1].length !== 0 && (
             <FooterCard
               date={e[0]}
