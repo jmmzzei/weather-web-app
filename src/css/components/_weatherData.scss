@@ -15,22 +15,11 @@
     align-items: center;
     justify-content: center;
     border-radius: 10px;
-    cursor: pointer;
     font-weight: 600;
 
     & > span {
       color: $accent;
       margin: 0 10px;
-    }
-
-    &:hover {
-      background: $accent;
-      color: white;
-      transition: 0.2s cubic-bezier(0.6, 0.04, 0.98, 0.335);
-
-      & > span {
-        color: $primary;
-      }
     }
   }
 }

@@ -10,14 +10,19 @@ export const AsideCard: FC<Props> = ({ ownArr, hour }) => {
   const { main, setMain } = useContext(Context)
 
   return (
-    <div
-      className="asideCard"
-      onClick={() => {
-        setMain({ ...ownArr, name: main?.name })
-      }}
-    >
-      <h4>{ownArr?.main?.temp}°C</h4>
-      <h4>{ownArr && hour}</h4>
+    <div className="asideCard">
+      <input
+        type="radio"
+        name="radio"
+        id={hour}
+        onClick={() => {
+          setMain({ ...ownArr, name: main?.name })
+        }}
+      />
+      <label htmlFor={hour}>
+        <span>{hour} | </span>
+        <span>{ownArr?.main?.temp}°C</span>
+      </label>
     </div>
   )
 }
