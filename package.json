@@ -13,7 +13,7 @@
     "@types/node": "^17.0.23",
     "@types/react": "^17.0.43",
     "@types/react-dom": "^17.0.14",
-    "axios": "^0.21.1",
+    "axios": "^1.6.4",
     "emotion-theming": "^10.0.27",
     "react": "^16.14.0",
     "react-content-loader": "^6.2.0",
